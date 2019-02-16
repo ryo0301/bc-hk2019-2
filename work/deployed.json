@@ -1,4 +1,6 @@
 {
-  "UserRegistry": "0x911b39e45c7d2e9ecaa472edea5ea2737b0e308b",
-  "Reputation": "0xb2bacd0a4cf933ec7b6adb32616ca4edaab5662e"
+  "Reputation": "0x0de453cdfd22850f267f5928badc9f97929e830d",
+  "UserRegistry": "0x6f0e45beec2d2637a5ced342855014382e2c2a73",
+  "IssuerIdentity": "0x88405b111b444a7dda5d117cc7100f418acc3e04",
+  "SubjectIdentity": "0x804ec8f7cc023a326712dba2d98882b0ffe41c97"
 }
