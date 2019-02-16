@@ -2,11 +2,6 @@ pragma solidity ^0.4.22;
 
 import './ERC725.sol';
 
-// **Warning!** This file is a protoype version of our work around ERC 725.
-// This file is now out of date and **should not be used**.
-// Our current identity contracts are here:
-// https://github.com/OriginProtocol/origin/tree/master/origin-contracts/contracts/identity
-
 contract KeyHolder is ERC725 {
 
     uint256 executionNonce;
@@ -25,8 +20,8 @@ contract KeyHolder is ERC725 {
 
     event ExecutionFailed(uint256 indexed executionId, address indexed to, uint256 indexed value, bytes data);
 
-    function KeyHolder() public {
-        bytes32 _key = keccak256(msg.sender);
+    constructor() public {
+        bytes32 _key = keccak256(abi.encodePacked(msg.sender));
         keys[_key].key = _key;
         keys[_key].purpose = 1;
         keys[_key].keyType = 1;
@@ -64,7 +59,7 @@ contract KeyHolder is ERC725 {
     {
         require(keys[_key].key != _key, "Key already exists"); // Key should not already exist
         if (msg.sender != address(this)) {
-          require(keyHasPurpose(keccak256(msg.sender), 1), "Sender does not have management key"); // Sender has MANAGEMENT_KEY
+          require(keyHasPurpose(keccak256(abi.encodePacked(msg.sender)), 1), "Sender does not have management key"); // Sender has MANAGEMENT_KEY
         }
 
         keys[_key].key = _key;
@@ -82,7 +77,7 @@ contract KeyHolder is ERC725 {
         public
         returns (bool success)
     {
-        require(keyHasPurpose(keccak256(msg.sender), 2), "Sender does not have action key");
+        require(keyHasPurpose(keccak256(abi.encodePacked(msg.sender)), 2), "Sender does not have action key");
 
         emit Approved(_id, _approve);
 
@@ -124,7 +119,8 @@ contract KeyHolder is ERC725 {
 
         emit ExecutionRequested(executionNonce, _to, _value, _data);
 
-        if (keyHasPurpose(keccak256(msg.sender),1) || keyHasPurpose(keccak256(msg.sender),2)) {
+        if (keyHasPurpose(keccak256(abi.encodePacked(msg.sender)),1)
+         || keyHasPurpose(keccak256(abi.encodePacked(msg.sender)),2)) {
             approve(executionNonce, true);
         }
 

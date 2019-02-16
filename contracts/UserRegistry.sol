@@ -2,7 +2,7 @@ pragma solidity ^0.4.24;
 
 import "./ClaimHolder.sol";
 
-contract UserRegistry is  {
+contract UserRegistry is ClaimHolder {
 
     event NewUser(address _address, address _identity);
     mapping(address => address) public users;
