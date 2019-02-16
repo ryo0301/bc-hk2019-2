@@ -1,4 +1,4 @@
-const Reputation = artifacts.require("./LifullCoin.sol");
+const Reputation = artifacts.require("./Reputation.sol");
 
 module.exports = function(deployer) {
     const v = '100000000';

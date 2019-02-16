@@ -5,8 +5,10 @@ import "./UserRegistry.sol";
 
 contract Identity is ClaimHolder {
 
-  constructor(address _registry) public {
-    UserRegistry(_registry).registerUser();
-  }
+    constructor(address _registry)
+      public
+    {
+        UserRegistry(_registry).registerUser();
+    }
 
 }
