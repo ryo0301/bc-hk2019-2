@@ -1,11 +1,24 @@
 pragma solidity ^0.4.24;
 
 import "./ClaimHolder.sol";
+import "./Reputation.sol";
+import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
 
-contract UserRegistry is ClaimHolder {
+contract UserRegistry is ClaimHolder, Ownable{
+
+    Reputation public rpt;
+
+    // struct Issuer{
+    //     address x;
+    // }
 
     event NewUser(address _address, address _identity);
     mapping(address => address) public users;
+    mapping(address => address[]) public issuers;
+
+    constructor(address rptAddress) public {
+        rpt = Reputation(rptAddress);
+    }
 
     function registerUser()
         public
@@ -21,4 +34,18 @@ contract UserRegistry is ClaimHolder {
         users[msg.sender] = 0;
     }
 
+    function registerIssuer(address identityAddress, address issuerAddress)
+        public
+    {
+        issuers[identityAddress].push(issuerAddress);
+        mintReptation(identityAddress, issuerAddress);
+    }
+
+    function mintReptation(address _identity, address _issuer) public {
+        for (uint i = 0; i < issuers[_identity].length; i++){
+            if(issuers[_identity][i] != _issuer){
+                rpt.transferFrom(owner, issuers[_identity][i], 1 ether);
+            }
+        }
+    }
 }
