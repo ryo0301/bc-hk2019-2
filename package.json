@@ -36,6 +36,7 @@
     "ipfs": "^0.31.7",
     "ipfs-api": "^24.0.1",
     "oauth": "^0.9.15",
+    "openzeppelin-solidity": "^1.12.0",
     "prettier": "^1.14.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
