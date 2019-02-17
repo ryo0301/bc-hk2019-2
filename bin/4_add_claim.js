@@ -87,10 +87,9 @@ async function main() {
 
       console.log("\n")
 
-/*
       await userRegistry.methods.registerIssuer(
-        issuerIdentity.options.address,
-        subjectIdentity.options.address
+        subjectIdentity.options.address,
+        issuerIdentity.options.address
       ).send({
         gas: 4612388,
         from: targets[j]
@@ -101,7 +100,6 @@ async function main() {
       }).catch((error) => {
         console.error(error)
       })
-*/
     }
   }
 
@@ -111,9 +109,12 @@ async function main() {
     reputationArtifact.abi,
     deployed.Reputation
   )
-  const balance = await reputation.methods.balanceOf(issuerIdentityAddress).call();
-
-  console.log('Reputation:', balance, "\n")
+  for (let i=0; i<deployed.IssuerIdentity.length; i++) {
+    console.log(`[${i}]`)
+    console.log(deployed.IssuerIdentity[i])
+    const balance = await reputation.methods.balanceOf(deployed.IssuerIdentity[i]).call();
+    console.log('Reputation:', balance, "\n")
+  }
 }
 
 main()
