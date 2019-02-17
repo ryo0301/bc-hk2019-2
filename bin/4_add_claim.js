@@ -87,7 +87,7 @@ async function main() {
 
       console.log("\n")
 
-		/*
+/*
       await userRegistry.methods.registerIssuer(
         issuerIdentity.options.address,
         subjectIdentity.options.address
@@ -101,9 +101,19 @@ async function main() {
       }).catch((error) => {
         console.error(error)
       })
-	  */
+*/
     }
   }
+
+  // Reputation
+  const reputationArtifact = require(ARTIFACTS_DIR + '/Reputation.json')
+  const reputation = new web3.eth.Contract(
+    reputationArtifact.abi,
+    deployed.Reputation
+  )
+  const balance = await reputation.methods.balanceOf(issuerIdentityAddress).call();
+
+  console.log('Reputation:', balance, "\n")
 }
 
 main()
