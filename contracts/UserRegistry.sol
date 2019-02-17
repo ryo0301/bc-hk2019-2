@@ -13,6 +13,9 @@ contract UserRegistry is ClaimHolder, Ownable{
     // }
 
     event NewUser(address _address, address _identity);
+    event NewIssuer(address _identity, address _issuer);
+    event MintReptation(address _identity, address _issuer);
+
     mapping(address => address) public users;
     mapping(address => address[]) public issuers;
 
@@ -38,6 +41,8 @@ contract UserRegistry is ClaimHolder, Ownable{
         public
     {
         issuers[identityAddress].push(issuerAddress);
+        emit NewIssuer(identityAddress, issuerAddress);
+
         mintReptation(identityAddress, issuerAddress);
     }
 
@@ -47,5 +52,6 @@ contract UserRegistry is ClaimHolder, Ownable{
                 rpt.transferFrom(owner, issuers[_identity][i], 1 ether);
             }
         }
+        emit MintReptation(_identity, _issuer);
     }
 }
